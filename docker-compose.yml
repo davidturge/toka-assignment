@@ -1,0 +1,32 @@
+services:
+  node-app:
+    build:
+      context: ./server  # Points to the server directory
+      dockerfile: Dockerfile  # Specifies the Dockerfile
+    image: node-app
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/assignment
+    ports:
+      - '3000:3000'  # Maps the application port
+    depends_on:
+      - mongodb
+    volumes:
+      - ./server:/app  # Mounts the server directory into the container
+    networks:
+      - node-network
+
+  mongodb:
+    image: mongo:6.0  # Uses the official MongoDB image
+    ports:
+      - '27017:27017'  # Maps the MongoDB port
+    volumes:
+      - dbdata:/data/db  # Persistent storage for MongoDB
+    networks:
+      - node-network
+
+volumes:
+  dbdata:  # Named volume for MongoDB data
+
+networks:
+  node-network:
+    driver: bridge  # Creates a network for the services
