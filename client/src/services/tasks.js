@@ -1,6 +1,6 @@
 import axiosClient from "../api"
 
-const TASKS_ENDPOINT = "/api/tasks"
+export const TASKS_ENDPOINT = "/api/tasks"
 
 /**
  * Fetches all tasks.
@@ -43,6 +43,40 @@ export const getTaskApi = async(id) => {
         return  await axiosClient.put(`${TASKS_ENDPOINT}/${id}`);
     } catch (e) {
         throw new Error(`Unable to fetch task with id ${id}: ${e.message}`);
+    }
+}
+
+export const searchTasksApi = async(body) => {
+    try {
+        return  await axiosClient.post(`${TASKS_ENDPOINT}/search`, body);
+    } catch (e) {
+        throw new Error(`Unable to fetch tasks: ${e.message}`);
+    }
+}
+
+/**
+ * Fetch the tasks using the given projectId and creates a map with the projectId as the key and the tasks as the values.
+ * @param {string} projectId - The ID of the project for which to fetch tasks.
+ * @returns {Promise<*>} A promise that resolves to the map of tasks grouped by projectId.
+ * @throws {Error} Throws an error if unable to fetch tasks.
+ */
+export const getTasksByProjectIdApi = async(projectId) => {
+    try {
+        const tasks  = await axiosClient.post(`${TASKS_ENDPOINT}/search`, { projectId });
+        return tasks.reduce((tasksMap, task) => {
+            const { projectId } = task;
+
+            if (!tasksMap[projectId]) {
+                tasksMap[projectId] = [];
+            }
+
+            // Push the current task into the appropriate project group
+            tasksMap[projectId].push(task);
+
+            return tasksMap;
+        }, {});
+    } catch (e) {
+        throw new Error(`Unable to fetch tasks: ${e.message}`);
     }
 }
 

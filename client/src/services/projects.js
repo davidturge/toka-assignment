@@ -40,7 +40,7 @@ export const createProjectApi = async(project) => {
  */
 export const getProjectApi = async(id) => {
     try {
-        return  await axiosClient.put(`${PROJECTS_ENDPOINT}/${id}`);
+        return  await axiosClient.get(`${PROJECTS_ENDPOINT}/${id}`);
     } catch (e) {
         throw new Error(`Unable to fetch project with id ${id}: ${e.message}`);
     }

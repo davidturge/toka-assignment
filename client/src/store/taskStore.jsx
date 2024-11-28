@@ -6,19 +6,8 @@ import {create} from 'zustand';
  */
 const useTaskStore = create((set) => ({
   tasks: {},
-  setTasks: (projectId, tasks) => {
-    if (!tasks || !Array.isArray(tasks)) {
-      console.error('Tasks must be a valid array.');
-      return;
-    }
-    set((state) => ({
-      tasks: {
-        ...state.tasks,
-        [projectId]: state.tasks[projectId]
-          ? [...state.tasks[projectId], ...tasks]
-          : tasks,
-      },
-    }));
+  setTasks: (tasks) => {
+    set({ tasks });
   },
   addTask: (task) => {
     if (!task || !task.projectId) {

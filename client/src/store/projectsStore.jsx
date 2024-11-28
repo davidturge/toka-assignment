@@ -6,14 +6,20 @@ import {create} from 'zustand';
  */
 const useProjectStore = create((set) => ({
   projects: [],
+  currentProject: {},
   setProjects: (projects) => {
     set({ projects: [...projects] });
+  },
+  setCurrentProject: (project) => {
+    set({ currentProject: project });
   },
   addProject: (project) => set((state) => ({ projects: [...state.projects, project] })),
   removeProject: (id) => set((state) => ({ projects: state.projects.filter(project => project._id !== id) })),
 }));
 
 export const useProjects = () => useProjectStore((state) => state.projects);
+export const useCurrentProject = () => useProjectStore((state) => state.currentProject);
 export const useSetProjects = () => useProjectStore((state) => state.setProjects)
+export const useSetCurrentProject = () => useProjectStore((state) => state.setCurrentProject)
 export const useAddProject = () => useProjectStore((state) => state.addProject)
 export const useRemoveProject = () => useProjectStore((state) => state.removeProject);
