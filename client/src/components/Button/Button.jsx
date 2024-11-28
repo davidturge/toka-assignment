@@ -1,9 +1,9 @@
 import React from "react";
-import Spinner, { SpinnerSize } from "../Spinner";
-import styles from './Button.module.scss';
+import Spinner from "../Spinner/Spinner";
 import PropTypes from "prop-types";
+import styles from './Button.module.scss';
 import { ButtonType, DEFAULT_LOADING_LABEL } from './constants'
-
+import { SpinnerSize } from '../Spinner/constants'
 
 const Button = ({
   onClick,
