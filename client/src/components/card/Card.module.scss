@@ -1,0 +1,38 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+$card-height: 200px;
+$card-border-radius: 8px;
+$card-border-color: #d6d5d5;
+$card-background: #ffffff;
+$card-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+$card-hover-scale: 1.05;
+$card-close-button-top: 10px;
+$card-close-button-right: 10px;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: $card-height;
+  border: 1px solid $card-border-color;
+  border-radius: $card-border-radius;
+  box-shadow: $card-box-shadow;
+  overflow: hidden;
+  background-color: $card-background;
+  padding: $padding-md;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale($card-hover-scale);
+  }
+
+  .card-header {
+    flex: 1;
+  }
+
+  .card-content{
+    flex: 2;
+  }
+}

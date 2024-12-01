@@ -1,0 +1,53 @@
+
+$card-close-button-top: 10px;
+$card-close-button-right: 10px;
+
+.snackbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  min-width: 300px;
+  max-width: 400px;
+  transition: opacity 0.3s ease-in-out;
+
+  &.success {
+    background-color: #28a745;
+  }
+
+  &.error {
+    background-color: #dc3545;
+  }
+
+  .message {
+    flex: 1;
+  }
+
+  .close-button {
+    position: absolute;
+    top: $card-close-button-top;
+    right: $card-close-button-right;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ffffff;
+
+    &:hover {
+      color: #000000;
+    }
+  }
+}
+
+
+
+
