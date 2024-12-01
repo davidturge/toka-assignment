@@ -1,23 +1,29 @@
 import React from "react";
-import Spinner from "../Spinner/Spinner";
 import PropTypes from "prop-types";
+import Spinner from "../spinner/Spinner";
 import styles from './Button.module.scss';
+import { SpinnerSize } from '../spinner/constants'
 import { ButtonType, DEFAULT_LOADING_LABEL } from './constants'
-import { SpinnerSize } from '../Spinner/constants'
 
 const Button = ({
   onClick,
-  isLoading = true,
+  isLoading = false,
   loadingLabel = DEFAULT_LOADING_LABEL,
   disabled = false,
+  padding,
+  fontSize,
+  buttonType = ButtonType.primary,
   children,
-  type = ButtonType.PRIMARY // Additional prop for variants like primary, secondary
 }) => {
   return (
     <button
-      className={`${styles.tokaButton} ${styles[type]} ${
-        isLoading ? styles.tokaButtonLoading : ""
-      }`}
+      style={{
+        padding: `${padding ? padding : '0.5rem'}`,
+        fontSize: `${fontSize ? fontSize : '1rem'}`,
+      }}
+
+      className={`${styles.tokaButton} ${styles[buttonType]} 
+      ${isLoading ? styles.tokaButtonLoading : ""}`}
       onClick={onClick}
       disabled={isLoading || disabled}
     >
@@ -29,13 +35,15 @@ const Button = ({
   );
 };
 
+export default Button;
+
 Button.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   isLoading: PropTypes.bool,
   loadingLabel: PropTypes.string,
+  padding: PropTypes.string,
+  fontSize:PropTypes.string,
+  buttonType: PropTypes.oneOf(Object.values(ButtonType)),
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  type: PropTypes.oneOf(Object.values(ButtonType)),
 };
-
-export default Button;
