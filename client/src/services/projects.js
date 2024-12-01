@@ -10,7 +10,7 @@ const PROJECTS_ENDPOINT = "/api/projects"
  */
 export const getAllProjectsApi = async() => {
     try {
-        return  await axiosClient.get(PROJECTS_ENDPOINT);
+        return await axiosClient.get(PROJECTS_ENDPOINT);
     } catch (e) {
         throw new Error(`unable to fetch all projects: ${e.message}`)
     }
@@ -25,7 +25,7 @@ export const getAllProjectsApi = async() => {
  */
 export const createProjectApi = async(project) => {
     try {
-        return  await axiosClient.post(`${PROJECTS_ENDPOINT}`, project);
+        return await axiosClient.post(`${PROJECTS_ENDPOINT}`, project);
     } catch (e) {
         throw new Error(`Unable to create a new project: ${e.message}`);
     }
@@ -40,7 +40,7 @@ export const createProjectApi = async(project) => {
  */
 export const getProjectApi = async(id) => {
     try {
-        return  await axiosClient.put(`${PROJECTS_ENDPOINT}/${id}`);
+        return await axiosClient.put(`${PROJECTS_ENDPOINT}/${id}`);
     } catch (e) {
         throw new Error(`Unable to fetch project with id ${id}: ${e.message}`);
     }
@@ -56,7 +56,7 @@ export const getProjectApi = async(id) => {
  */
 export const updateProjectApi = async(id, body) => {
     try {
-        return  await axiosClient.put(`${PROJECTS_ENDPOINT}/${id}`, body);
+        return await axiosClient.put(`${PROJECTS_ENDPOINT}/${id}`, body);
     } catch (e) {
         throw new Error(`Unable to update project with the id ${id}: ${e.message}`);
     }
@@ -71,7 +71,7 @@ export const updateProjectApi = async(id, body) => {
  */
 export const deleteProjectApi = async(id) => {
     try {
-        return  await axiosClient.delete(`${PROJECTS_ENDPOINT}/${id}`);
+        return await axiosClient.delete(`${PROJECTS_ENDPOINT}/${id}`);
     } catch (e) {
         throw new Error(`Unable to delete project with the id ${id}: ${e.message}`);
     }

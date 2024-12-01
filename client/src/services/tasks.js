@@ -10,7 +10,7 @@ const TASKS_ENDPOINT = "/api/tasks"
  */
 export const getAllTasksApi = async() => {
     try {
-        return  await axiosClient.get(TASKS_ENDPOINT);
+        return await axiosClient.get(TASKS_ENDPOINT);
     } catch (e) {
         throw new Error(`unable to fetch all tasks: ${e.message}`)
     }
@@ -25,7 +25,7 @@ export const getAllTasksApi = async() => {
  */
 export const createTaskApi = async(task) => {
     try {
-        return  await axiosClient.post(`${TASKS_ENDPOINT}`, task);
+        return await axiosClient.post(`${TASKS_ENDPOINT}`, task);
     } catch (e) {
         throw new Error(`Unable to create a new task: ${e.message}`);
     }
@@ -40,7 +40,7 @@ export const createTaskApi = async(task) => {
  */
 export const getTaskApi = async(id) => {
     try {
-        return  await axiosClient.put(`${TASKS_ENDPOINT}/${id}`);
+        return await axiosClient.put(`${TASKS_ENDPOINT}/${id}`);
     } catch (e) {
         throw new Error(`Unable to fetch task with id ${id}: ${e.message}`);
     }
@@ -56,7 +56,7 @@ export const getTaskApi = async(id) => {
  */
 export const updateTaskApi = async(id, body) => {
     try {
-        return  await axiosClient.put(`${TASKS_ENDPOINT}/${id}`, body);
+        return await axiosClient.put(`${TASKS_ENDPOINT}/${id}`, body);
     } catch (e) {
         throw new Error(`Unable to update task with the id ${id}: ${e.message}`);
     }
@@ -71,7 +71,7 @@ export const updateTaskApi = async(id, body) => {
  */
 export const deleteTaskApi = async(id) => {
     try {
-        return  await axiosClient.delete(`${TASKS_ENDPOINT}/${id}`);
+        return await axiosClient.delete(`${TASKS_ENDPOINT}/${id}`);
     } catch (e) {
         throw new Error(`Unable to delete task with the id ${id}: ${e.message}`);
     }
