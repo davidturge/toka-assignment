@@ -1,0 +1,85 @@
+@import './mixins';
+@import './variables';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: $default-font;
+  background-color: $background-color;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  margin-top: $navbar-height;
+}
+
+form {
+  width: 100%;
+  max-width: 40rem;
+  background-color: $form-bg-color;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+
+.control,
+fieldset {
+  display: flex;
+  margin-bottom: $margin-sm;
+  flex-wrap: wrap;
+  &.no-margin {
+    margin-bottom: 0;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: $margin-xs;
+    display: block;
+    color: $form-text-color;
+  }
+
+  input {
+    width: 100%;
+    padding: $padding-sm;
+    border-radius: 4px;
+    border: 1px solid $form-border-color;
+    box-sizing: border-box;
+
+    &[type="date"] {
+      font-family: "Lato", sans-serif;
+    }
+  }
+
+  select {
+    width: 100%;
+    padding: $padding-sm;
+    border-radius: 4px;
+    border: 1px solid $form-border-color;
+    box-sizing: border-box;
+  }
+}
+
+.control-error {
+  color: $form-error-color;
+  font-size: 0.8rem;
+  height: 2rem;
+  padding: $padding-sm 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+
