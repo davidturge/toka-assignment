@@ -1,0 +1,42 @@
+@import '../../../../styles/_variables';
+
+$lines: 3;
+$line-height: 1.3em;
+
+.title {
+  font-weight: normal;
+  margin: 0;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  max-height: calc($line-height * $lines);
+  line-height: $line-height;
+  color: #656363;
+}
+
+.footer-inner-wrapper {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .card-actions {
+    cursor: pointer;
+    display: flex;
+    justify-content: end;
+
+     :hover {
+      color: $button-color-primary-hover;
+    }
+
+    :last-child{
+      margin-inline-end: 0;
+    }
+  }
+}
+
+

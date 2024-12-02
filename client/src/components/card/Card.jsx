@@ -6,19 +6,29 @@ const Card = ({
   header,
   content,
   footer,
-  onClick
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
 }) => {
   return (
-    <div className={styles.card} onClick={onClick}>
-      <div className={styles['card-header']}>
-        {header}
-      </div>
+    <div
+      className={styles.card}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
+      {
+        header && <div className={styles['card-header']}>
+          {header}
+        </div>
+      }
       <div className={styles['card-content']}>
         {content}
       </div>
-      <div className={styles['card-footer']}>
-        {footer}
-      </div>
+      {
+        footer && <div className={styles['card-footer']}>
+          {footer}
+        </div>
+      }
     </div>
   )
 }
@@ -36,4 +46,6 @@ Card.propTypes = {
     PropTypes.node,
   ]),
   onClick: PropTypes.func,
+  onMouseEnter:  PropTypes.func,
+  onMouseLeave:  PropTypes.func,
 };

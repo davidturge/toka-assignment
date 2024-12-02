@@ -1,0 +1,63 @@
+@import '../../../../styles/variables';
+
+.card-wrapper{
+  margin-block-end: $margin-lg;
+
+  .task-card-content{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    flex-wrap: wrap;
+
+    .left-section{
+      display: flex;
+      flex-direction: column;
+      flex: 2;
+      .title{
+        font-size: $font-size-lg;
+        font-weight: normal;
+        margin:0;
+        flex: 1;
+      }
+      .notes {
+        flex: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        max-height: calc(1.3em * 3);
+        line-height: 1.3em;
+        color: #656363;
+
+      }
+      .date {
+        flex: 1;
+        display: flex;
+        align-items: end;
+      }
+    }
+    .right-section{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      .state{
+        flex: 1;
+      }
+      .card-actions{
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: end;
+        :hover {
+          color: $button-color-primary-hover;
+        }
+      }
+
+    }
+  }
+}
+
+

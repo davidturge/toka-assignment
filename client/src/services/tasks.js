@@ -1,6 +1,6 @@
 import axiosClient from "../api"
 
-const TASKS_ENDPOINT = "/api/tasks"
+export const TASKS_ENDPOINT = "/api/tasks"
 
 /**
  * Fetches all tasks.
@@ -46,19 +46,52 @@ export const getTaskApi = async(id) => {
     }
 }
 
+export const searchTasksApi = async(body) => {
+    try {
+        return await axiosClient.post(`${TASKS_ENDPOINT}/search`, body);
+    } catch (e) {
+        throw new Error(`Unable to fetch tasks: ${e.message}`);
+    }
+}
+
+/**
+ * Fetch the tasks using the given projectId and creates a map with the projectId as the key and the tasks as the values.
+ * @param {string} projectId - The ID of the project for which to fetch tasks.
+ * @returns {Promise<*>} A promise that resolves to the map of tasks grouped by projectId.
+ * @throws {Error} Throws an error if unable to fetch tasks.
+ */
+export const getTasksByProjectIdApi = async(projectId) => {
+    try {
+        const tasks  = await axiosClient.post(`${TASKS_ENDPOINT}/search`, { projectId });
+        return tasks.reduce((tasksMap, task) => {
+            const { projectId } = task;
+
+            if (!tasksMap[projectId]) {
+                tasksMap[projectId] = [];
+            }
+
+            // Push the current task into the appropriate project group
+            tasksMap[projectId].push(task);
+
+            return tasksMap;
+        }, {});
+    } catch (e) {
+        throw new Error(`Unable to fetch tasks: ${e.message}`);
+    }
+}
+
 /**
  * Updates a task by its ID.
  *
- * @param {string} id - The ID of the task to update.
- * @param {Object} body - The data to update the task with.
+ * @param {Object} data - The data to update the task with.
  * @returns {Promise<Object>} A promise that resolves to the updated task's data.
  * @throws {Error} Throws an error if unable to update the task.
  */
-export const updateTaskApi = async(id, body) => {
+export const updateTaskApi = async(data) => {
     try {
-        return await axiosClient.put(`${TASKS_ENDPOINT}/${id}`, body);
+        return await axiosClient.put(`${TASKS_ENDPOINT}/${data._id}`, data);
     } catch (e) {
-        throw new Error(`Unable to update task with the id ${id}: ${e.message}`);
+        throw new Error(`Unable to update task with the id ${data._id}: ${e.message}`);
     }
 }
 

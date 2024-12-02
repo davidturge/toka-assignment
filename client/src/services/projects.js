@@ -1,4 +1,5 @@
 import axiosClient from "../api"
+import { getTasksByProjectIdApi } from './tasks'
 
 const PROJECTS_ENDPOINT = "/api/projects"
 
@@ -10,9 +11,9 @@ const PROJECTS_ENDPOINT = "/api/projects"
  */
 export const getAllProjectsApi = async() => {
     try {
-        return await axiosClient.get(PROJECTS_ENDPOINT);
+        return  await axiosClient.get(PROJECTS_ENDPOINT);
     } catch (e) {
-        throw new Error(`unable to fetch all projects: ${e.message}`)
+        throw new Error(`Something went wrong while loading your projects. Please try again.`);
     }
 }
 
@@ -27,7 +28,7 @@ export const createProjectApi = async(project) => {
     try {
         return await axiosClient.post(`${PROJECTS_ENDPOINT}`, project);
     } catch (e) {
-        throw new Error(`Unable to create a new project: ${e.message}`);
+        throw new Error(`Unable to create a new project`);
     }
 }
 
@@ -40,25 +41,24 @@ export const createProjectApi = async(project) => {
  */
 export const getProjectApi = async(id) => {
     try {
-        return await axiosClient.put(`${PROJECTS_ENDPOINT}/${id}`);
+        return await axiosClient.get(`${PROJECTS_ENDPOINT}/${id}`);
     } catch (e) {
-        throw new Error(`Unable to fetch project with id ${id}: ${e.message}`);
+        throw new Error(`Unable to fetch project with id ${id}`);
     }
 }
 
 /**
  * Updates a project by its ID.
  *
- * @param {string} id - The ID of the project to update.
- * @param {Object} body - The data to update the project with.
+ * @param {Object} data - The data to update the project with.
  * @returns {Promise<Object>} A promise that resolves to the updated project's data.
  * @throws {Error} Throws an error if unable to update the project.
  */
-export const updateProjectApi = async(id, body) => {
+export const updateProjectApi = async(data) => {
     try {
-        return await axiosClient.put(`${PROJECTS_ENDPOINT}/${id}`, body);
+        return await axiosClient.put(`${PROJECTS_ENDPOINT}/${data._id}`, data);
     } catch (e) {
-        throw new Error(`Unable to update project with the id ${id}: ${e.message}`);
+        throw new Error(`Unable to update project with the id ${data._id}`);
     }
 }
 
@@ -73,6 +73,25 @@ export const deleteProjectApi = async(id) => {
     try {
         return await axiosClient.delete(`${PROJECTS_ENDPOINT}/${id}`);
     } catch (e) {
-        throw new Error(`Unable to delete project with the id ${id}: ${e.message}`);
+        throw new Error(`Unable to delete project with the id ${id}`);
+    }
+}
+
+/**
+ * Return the project with the project tasks
+ *
+ * @param id
+ * @returns {Promise<{project: axios.AxiosResponse<any>, tasks: *}>}
+ */
+export const getProjectWithTasksApi = async(id) => {
+    try {
+        const project = await axiosClient.get(`${PROJECTS_ENDPOINT}/${id}`);
+        const tasks = await getTasksByProjectIdApi(id);
+        return {
+            project,
+            tasks
+        };
+    } catch (e) {
+        throw new Error(`Unable to fetch project with tasks`);
     }
 }

@@ -10,6 +10,7 @@
   cursor: pointer;
   transition: background-color 0.3s;
   color: #fff;
+  font-size: $font-size-md;
 
   &.primary {
     background-color: $button-color-primary;

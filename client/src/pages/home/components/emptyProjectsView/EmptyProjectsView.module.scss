@@ -1,0 +1,9 @@
+@import '../../../../styles/_mixins';
+@import '../../../../styles/_variables';
+
+.empty-projects-view {
+  width: 100%;
+  height: 100%;
+  font-size: $font-size-lg;
+  @include flex-center();
+}

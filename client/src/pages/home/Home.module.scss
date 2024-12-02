@@ -1,0 +1,34 @@
+@import '../../styles/mixins';
+@import '../../styles/variables';
+
+#home {
+  min-height: 100%;
+  padding: $padding-lg;
+
+  .actions-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    margin-block-end: $margin-md;
+  }
+
+  .cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);;
+    gap:20px;
+  }
+
+  @media (max-width: 900px) {
+    .cards-wrapper {
+      grid-template-columns: repeat(2, 1fr); /* 2 items per row for smaller screens */
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cards-wrapper {
+      grid-template-columns: repeat(1, 1fr); /* 1 item per row for very small screens */
+    }
+  }
+}
+
+

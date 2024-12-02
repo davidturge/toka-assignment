@@ -1,0 +1,8 @@
+@import '../../../../styles/variables';
+
+.empty-tasks-view {
+  grid-column: span 4; // Span the whole grid if no tasks are found
+  text-align: center;
+  color: $primary-color;
+  font-size: $font-size-lg;
+}

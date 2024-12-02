@@ -1,0 +1,9 @@
+@import '../../../../styles/_variables';
+
+.task-form-wrapper {
+  min-width: 330px;
+  h2 {
+    font-weight: normal;
+    margin: 0 0 $margin-md 0 ;
+  }
+}

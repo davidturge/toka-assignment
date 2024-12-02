@@ -1,7 +1,8 @@
 import React from 'react'
-import styles from './Navigation.module.scss';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { ArrowCircleLeft, House } from '@phosphor-icons/react'
+import { useNavigate } from 'react-router-dom'
 import { useShowBackButton } from '../../store/navigationStore'
+import styles from './Navigation.module.scss'
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -14,15 +15,11 @@ const Navigation = () => {
           <ul>
             {showBackButton ? (
               <li>
-                <a
-                  className={styles['back-button']}
-                  onClick={() => navigate(-1)}>
-                  Back
-                </a>
+                <a><ArrowCircleLeft size={40} onClick={() => navigate(-1)}/></a>
               </li>
             ) : (
               <li>
-                <NavLink to="/">Projects</NavLink>
+                <House size={32} />
               </li>
             )}
           </ul>
