@@ -78,12 +78,13 @@ export const buildProjectsSearchQuery = (value) => {
 /**
  * Build Search query for tasks
  * @param value
+ * @param projectId
  * @returns {{$or: [{name: {$regex: string, $options: string}},{description: {$regex: string, $options: string}}]}}
  */
-export const buildTasksSearchQuery = (value) => {
+export const buildTasksSearchQuery = (value, projectId) => {
   return {
     $and: [
-      { projectId: '674ddb8f98c93592e62a84d3' },
+      { projectId },
       {
         $or: [
           { notes: { $regex: '.*' + value + '.*', $options: 'i' } },
@@ -93,3 +94,6 @@ export const buildTasksSearchQuery = (value) => {
     ],
   }
 }
+
+
+

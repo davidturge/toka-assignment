@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TaskCard from './taskCard/TaskCard'
 import EmptyTasksView from './emptyTasksView/EmptyTasksView'
 
-const TaskCards = ({ values = [], projectId }) => (
+const TaskCards = ({ values = {}, projectId }) => (
   <>
     {
       values && Object.values(values).length > 0 ? (
@@ -29,7 +29,7 @@ const TaskCards = ({ values = [], projectId }) => (
 );
 
 TaskCards.propTypes = {
-  values: PropTypes.any.isRequired,
+  values: PropTypes.any,
   projectId: PropTypes.string.isRequired,
 };
 

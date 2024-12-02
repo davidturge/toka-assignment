@@ -38,7 +38,7 @@ Select.propTypes = {
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
-  error: PropTypes.string,
+  error: PropTypes.bool,
 };
 
 export default Select

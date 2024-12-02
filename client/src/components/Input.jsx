@@ -16,7 +16,7 @@ const Input = ({label, id, error, ...props}) => {
 Input.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.bool,
   type: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.oneOfType([
