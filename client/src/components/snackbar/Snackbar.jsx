@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styles from './Snackbar.module.scss';
 import useSnackbarStore from '../../store/snackbarStore' // Import zustand store
 
-const SNACKBAR_TIMEOUT = 600000;
+const SNACKBAR_TIMEOUT = 8000;
 
 const Snackbar = () => {
   const { isVisible, message, type, closeSnackbar } = useSnackbarStore();

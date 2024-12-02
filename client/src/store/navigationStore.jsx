@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { searchProjectsApi } from '../services/projects'
+import { EntityType } from '../constants'
 
 const useNavigationStore = create((set) => ({
   searchOptions: {
-    type: 'projects',
+    type: EntityType.PROJECT,
     api: searchProjectsApi,
     handler: () => false
   },

@@ -12,6 +12,7 @@ import Spinner from '../../components/spinner/Spinner'
 import { SpinnerSize } from '../../components/spinner/constants'
 import useNavigationStore from '../../store/navigationStore'
 import { SnackbarType } from '../../components/snackbar/constants'
+import { EntityType, GENERIC_ERROR_MSG } from '../../constants'
 
 const Home = () => {
   const [isLoadingProjects, setIsLoadingProjects] = useState(false);
@@ -49,7 +50,7 @@ const Home = () => {
         res && setProjectCount(res.length);
         setFetchProjectsError(false);
       } catch (error) {
-        showSnackbar({ message: error.message, type: SnackbarType.ERROR });
+        showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
         setFetchProjectsError(true);
       } finally {
         setIsLoadingProjects(false);
@@ -61,7 +62,7 @@ const Home = () => {
 
   useEffect(() => {
     setCreateItemHandler(createProjectHandler);
-    setSearchOptions({type: 'projects', api: searchProjectsApi, handler : setFilteredProjects})
+    setSearchOptions({type: EntityType.PROJECT, api: searchProjectsApi, handler : setFilteredProjects})
   }, [setCreateItemHandler, setSearchOptions])
 
   const projectMessageHandlers  = {
@@ -77,7 +78,7 @@ const Home = () => {
   }
 
   //Handle the socket message
-  useSocketMessage('Project', projectMessageHandlers);
+  useSocketMessage(EntityType.PROJECT, projectMessageHandlers);
 
   if(fetchProjectsError) {
     return <EmptyProjectsView/>

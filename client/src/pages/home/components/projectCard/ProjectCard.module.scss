@@ -16,7 +16,7 @@ $line-height: 1.3em;
   -webkit-line-clamp: $lines;
   max-height: calc($line-height * $lines);
   line-height: $line-height;
-  color: #656363;
+  color: $gray-color;
 }
 
 .footer-inner-wrapper {

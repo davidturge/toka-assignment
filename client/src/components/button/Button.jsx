@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from './Button.module.scss';
 import { ButtonType, DEFAULT_LOADING_LABEL } from './constants'
-import { SpinnerSize } from '../spinner/constants'
-import Spinner from '../spinner/Spinner'
 
 const Button = ({
   onClick,
@@ -15,20 +13,17 @@ const Button = ({
 }) => {
   return (
     <button
-      className={`${styles.tokaButton} ${styles[buttonType]} 
-      ${isLoading ? styles.tokaButtonLoading : ""}`}
+      className={`${styles['toka-button']} ${styles[buttonType]} 
+      ${isLoading ? styles['toka-button-loading'] : ""}`}
       onClick={onClick}
       disabled={isLoading || disabled}
     >
-      {isLoading && <Spinner size={SpinnerSize.SMALL} isFullScreen={false}/>}
-      <span className={styles.tokaButtonLabel}>
+      <span className={styles['button-label']}>
         {isLoading && loadingLabel ? loadingLabel : children}
       </span>
     </button>
   );
 };
-
-export default Button;
 
 Button.propTypes = {
   onClick: PropTypes.func,
@@ -40,3 +35,5 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
+
+export default Button;

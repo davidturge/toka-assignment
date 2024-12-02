@@ -15,6 +15,7 @@ import useNavigationStore from '../../store/navigationStore'
 import { searchTasksApi } from '../../services/tasks'
 import EmptyTasksView from './components/emptyTasksView/EmptyTasksView'
 import { SnackbarType } from '../../components/snackbar/constants'
+import { EntityType, GENERIC_ERROR_MSG } from '../../constants'
 
 const Projects = () => {
   const { id: projectId } = useParams();
@@ -36,7 +37,6 @@ const Projects = () => {
     decrementTaskCount,
     incrementTaskCount
   } = useTaskStore();
-
 
   const currentProject = useCurrentProject();
   const setCurrentProject = useSetCurrentProject();
@@ -62,7 +62,7 @@ const Projects = () => {
         tasks[projectId] && setTaskCount(tasks[projectId].length);
         setFetchProjectWithTasksError(false)
       } catch (error) {
-        showSnackbar({ message: error.message, type: SnackbarType.ERROR });
+        showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
         setFetchProjectWithTasksError(true);
       } finally {
         setIsLoadingProjectWithTasks(false);
@@ -79,7 +79,7 @@ const Projects = () => {
   useEffect(() => {
     setShowBackButton(true);
     setCreateItemHandler(createTaskHandler);
-    setSearchOptions({type:'tasks', api: searchTasksApi, handler : setFilteredTasks});
+    setSearchOptions({type: EntityType.TASK, api: searchTasksApi, handler : setFilteredTasks});
 
     return () => setShowBackButton(false);
   }, []);
@@ -96,7 +96,7 @@ const Projects = () => {
     }
   };
 
-  useSocketMessage('Task', taskMessageHandlers);
+  useSocketMessage(EntityType.TASK, taskMessageHandlers);
 
   if(fetchProjectWithTasksError) {
     return <EmptyTasksView/>

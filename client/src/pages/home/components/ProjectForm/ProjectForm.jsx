@@ -9,6 +9,7 @@ import Input from '../../../../components/Input';
 import * as formConstants from './constants'
 import styles from './ProjectForm.module.scss';
 import { SnackbarType } from '../../../../components/snackbar/constants'
+import { GENERIC_ERROR_MSG, UPDATE_SUCCESSFULLY_MSG } from '../../../../constants'
 
 const ProjectForm = ({
   id, name ='',
@@ -41,15 +42,16 @@ const ProjectForm = ({
   }, [nameIsInvalid, descriptionIsInvalid, hasEdited]);
 
   const onSuccess = useCallback(() => {
+    showSnackbar({ message: UPDATE_SUCCESSFULLY_MSG, type: SnackbarType.SUCCESS });
     closeModal();
-    showSnackbar({ message: 'Updated successfully', type: SnackbarType.SUCCESS });
   }, [closeModal])
 
   const onFailure = useCallback(() => {
+    showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
     closeModal();
   }, [closeModal])
 
-  const { onSubmit } = useSubmit({
+  const { onSubmit, isLoading } = useSubmit({
     apiFn: id ? updateProjectApi : createProjectApi,
     successCallback: onSuccess,
     failureCallback: onFailure,
@@ -109,6 +111,7 @@ const ProjectForm = ({
         />
         <Button
           type="submit"
+          isLoading={isLoading}
           disabled={!isFormValid}>
           {
             id ?

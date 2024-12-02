@@ -13,8 +13,6 @@ const Input = ({label, id, error, ...props}) => {
   )
 }
 
-export default Input;
-
 Input.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string.isRequired,
@@ -30,3 +28,6 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   required: PropTypes.bool,
 };
+
+export default Input;
+

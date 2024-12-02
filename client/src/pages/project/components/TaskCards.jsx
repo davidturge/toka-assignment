@@ -28,10 +28,9 @@ const TaskCards = ({ values = [], projectId }) => (
   </>
 );
 
-
-export default TaskCards
-
 TaskCards.propTypes = {
   values: PropTypes.any.isRequired,
   projectId: PropTypes.string.isRequired,
 };
+
+export default TaskCards

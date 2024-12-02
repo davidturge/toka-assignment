@@ -1,7 +1,7 @@
 import React from 'react'
 
 /**
- * Handle the form submit
+ * Handle the forms submit
  * @param apiFn
  * @param successCallback
  * @param failureCallback

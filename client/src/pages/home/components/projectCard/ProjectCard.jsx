@@ -3,7 +3,7 @@ import { PencilCircle, Trash } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { deleteProjectApi } from '../../../../services/projects'
-import { useCloseModal, useOpenModal } from '../../../../store/modalStore'
+import useModalStore from '../../../../store/modalStore'
 import Card from '../../../../components/card/Card'
 import ProjectForm from '../ProjectForm/ProjectForm'
 import { calcDateFromNow } from '../../../../utils/util'
@@ -11,6 +11,7 @@ import ConfirmationModal from '../../../../components/modals/confirm-modal/Confi
 import { useShowSnackbar } from '../../../../store/snackbarStore'
 import styles from './ProjectCard.module.scss';
 import { SnackbarType } from '../../../../components/snackbar/constants'
+import { DELETE_ERROR_MSG, DELETE_SUCCESSFULLY_MSG } from '../../../../constants'
 
 const ProjectCard = ({
   _id: projectId,
@@ -19,34 +20,32 @@ const ProjectCard = ({
   updatedAt
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isDeletingProject, setIsDeletingProject] = useState(false);
   const navigate = useNavigate();
 
   const showSnackbar = useShowSnackbar();
-  const openModal = useOpenModal();
-  const closeModal = useCloseModal();
+
+  const { openModal, closeModal, setIsModalLoading}  = useModalStore()
 
   const deleteProjectHandler = useCallback(
     async (id) => {
-      setIsDeletingProject(true);
+      setIsModalLoading(true);
       try {
         await deleteProjectApi(id);
-        showSnackbar({ message: 'Successfully deleted', type: SnackbarType.SUCCESS });
+        showSnackbar({ message: DELETE_SUCCESSFULLY_MSG, type: SnackbarType.SUCCESS });
       } catch (error) {
-        showSnackbar({ message: 'Unable to delete the item. Please check and try again.', type: SnackbarType.Error });
+        showSnackbar({ message: DELETE_ERROR_MSG, type: SnackbarType.Error });
       } finally {
-        setIsDeletingProject(false);
+        setIsModalLoading(false);
         closeModal();
       }
     },
-    [deleteProjectApi, showSnackbar, closeModal]
+    [deleteProjectApi, showSnackbar, closeModal, setIsModalLoading]
   );
 
   const onDeleteButtonClicked = useCallback(async(evt, id) => {
     evt.stopPropagation();
     openModal(
       <ConfirmationModal
-        isLoading={isDeletingProject}
         onConfirm={() => deleteProjectHandler(id)}
         onCancel={closeModal}
         message={"Are you sure you want to delete this project?"}
@@ -97,11 +96,11 @@ const ProjectCard = ({
   )
 };
 
-export default ProjectCard;
-
 ProjectCard.propTypes = {
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
   updatedAt: PropTypes.string.isRequired
 };
+
+export default ProjectCard;

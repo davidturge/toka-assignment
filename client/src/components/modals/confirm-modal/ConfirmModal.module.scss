@@ -20,15 +20,15 @@
 
   .confirm-modal-content{
     @include flex-center();
-    margin-block-end: 10px;
+    margin-block-end: $margin-sm;
     font-size: $font-size-md;
   }
 
   .confirm-modal-actions{
     display: flex;
-    justify-content:space-between;
-    width: 150px;
+    justify-content: center;
     font-size: $font-size-sm;
+    gap: 10px;
   }
 }
 

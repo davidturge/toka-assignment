@@ -29,8 +29,6 @@ const Select = ({
   );
 };
 
-export default Select
-
 Select.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
@@ -42,3 +40,7 @@ Select.propTypes = {
   onBlur: PropTypes.func,
   error: PropTypes.string,
 };
+
+export default Select
+
+

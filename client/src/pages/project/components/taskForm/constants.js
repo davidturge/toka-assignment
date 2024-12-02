@@ -5,7 +5,6 @@ export const TASK_FORM_INPUT_STATE = "state";
 export const TASK_FORM_INPUT_DUE_DATE = "dueDate";
 export const TASK_FORM_INPUT_NOTES = "notes";
 
-
 export const TASK_FORM_INPUT_LABEL_STATE = "State:";
 export const TASK_FORM_INPUT_LABEL_DUE_DATE = "Due Date:";
 export const TASK_FORM_INPUT_LABEL_NOTES = "Notes:";

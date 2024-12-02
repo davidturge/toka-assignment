@@ -12,6 +12,7 @@ import styles from './TaskForm.module.scss';
 import { taskStates } from '../../constants'
 import * as formConstants from './constants';
 import { SnackbarType } from '../../../../components/snackbar/constants'
+import { GENERIC_ERROR_MSG, UPDATE_SUCCESSFULLY_MSG } from '../../../../constants'
 
 const TaskForm = ({
   taskId,
@@ -39,12 +40,12 @@ const TaskForm = ({
   const closeModal  = useCloseModal();
 
   const onSuccess = useCallback(() => {
-    showSnackbar({ message: 'Changes saved successfully.', type: SnackbarType.SUCCESS });
+    showSnackbar({ message: UPDATE_SUCCESSFULLY_MSG, type: SnackbarType.SUCCESS });
     closeModal();
   }, [closeModal]);
 
   const onFailure = useCallback(() => {
-    showSnackbar({ message: 'Something went wrong. Please try again later.', type: SnackbarType.ERROR });
+    showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
     closeModal();
   }, [closeModal]);
 
@@ -147,8 +148,6 @@ const TaskForm = ({
   );
 };
 
-export default TaskForm;
-
 TaskForm.propTypes = {
   taskId: PropTypes.string,
   projectId: PropTypes.string.isRequired,
@@ -156,3 +155,5 @@ TaskForm.propTypes = {
   dueDate: PropTypes.string,
   notes: PropTypes.string,
 };
+
+export default TaskForm;

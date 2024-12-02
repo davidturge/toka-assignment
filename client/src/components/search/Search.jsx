@@ -4,14 +4,15 @@ import { useSearchOptions } from '../../store/navigationStore'
 import { buildProjectsSearchQuery, buildTasksSearchQuery } from '../../utils/util'
 import { useShowSnackbar } from '../../store/snackbarStore'
 import styles from './Search.module.scss'
-import { SEARCH_ERROR_MSG } from '../../constants'
+import { EntityType, SEARCH_ERROR_MSG } from '../../constants'
+import { SnackbarType } from '../snackbar/constants'
 
 const Search = () => {
   const searchOptions = useSearchOptions();
   const showSnackbar = useShowSnackbar();
 
   const onSearch = async (evt) => {
-    const query = (searchOptions.type === "projects") ?
+    const query = (searchOptions.type === EntityType.PROJECT) ?
       buildProjectsSearchQuery(evt.target.value) :
       buildTasksSearchQuery(evt.target.value);
     const { api, handler} =  searchOptions;
@@ -20,7 +21,7 @@ const Search = () => {
       const rest = await api(query);
       handler(rest);
     } catch (error) {
-      showSnackbar({message: SEARCH_ERROR_MSG, type: 'error'});
+      showSnackbar({message: SEARCH_ERROR_MSG, type: SnackbarType.ERROR});
     }
   }
 

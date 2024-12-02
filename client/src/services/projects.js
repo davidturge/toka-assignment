@@ -13,7 +13,7 @@ export const getAllProjectsApi = async() => {
     try {
         return  await axiosClient.get(PROJECTS_ENDPOINT);
     } catch (e) {
-        throw new Error(`Unable to load projects.`);
+        throw new Error(`Unable to load projects: ${e.message}`);
     }
 }
 
@@ -28,7 +28,7 @@ export const createProjectApi = async(project) => {
     try {
         return await axiosClient.post(`${PROJECTS_ENDPOINT}`, project);
     } catch (e) {
-        throw new Error(`Unable to create a new project`);
+        throw new Error(`Unable to create a new project: ${e.message}`);
     }
 }
 
@@ -43,7 +43,7 @@ export const getProjectApi = async(id) => {
     try {
         return await axiosClient.get(`${PROJECTS_ENDPOINT}/${id}`);
     } catch (e) {
-        throw new Error(`Unable to fetch project with id ${id}`);
+        throw new Error(`Unable to fetch project with id ${id}: ${e.message}`);
     }
 }
 
@@ -58,7 +58,7 @@ export const updateProjectApi = async(data) => {
     try {
         return await axiosClient.put(`${PROJECTS_ENDPOINT}/${data._id}`, data);
     } catch (e) {
-        throw new Error(`Unable to update project with the id ${data._id}`);
+        throw new Error(`Unable to update project with the id ${data._id}: ${e.message}`);
     }
 }
 
@@ -73,7 +73,7 @@ export const deleteProjectApi = async(id) => {
     try {
         return await axiosClient.delete(`${PROJECTS_ENDPOINT}/${id}`);
     } catch (e) {
-        throw new Error(`Unable to delete project with the id ${id}`);
+        throw new Error(`Unable to delete project with the id ${id}: ${e.message}`);
     }
 }
 
@@ -92,7 +92,7 @@ export const getProjectWithTasksApi = async(id) => {
             tasks
         };
     } catch (e) {
-        throw new Error(`Unable to fetch project with tasks`);
+        throw new Error(`Unable to fetch project with tasks: ${e.message}`);
     }
 }
 

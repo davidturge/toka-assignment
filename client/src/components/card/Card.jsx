@@ -35,8 +35,6 @@ const Card = ({
   )
 }
 
-export default Card;
-
 Card.propTypes = {
   header: PropTypes.oneOfType([
     PropTypes.string,
@@ -52,3 +50,5 @@ Card.propTypes = {
   onMouseLeave: PropTypes.func,
   isRow: PropTypes.bool, // indication to set the card to 100%
 };
+
+export default Card;
