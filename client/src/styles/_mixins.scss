@@ -8,7 +8,7 @@
 
 @mixin spinner($size: 30px, $thickness: 2px) {
     display: inline-block;
-    border: $thickness solid #f3f3f3;
+    border: $thickness solid $gray-color;
     border-top-color: $primary-color;
     border-radius: 50%;
     width: $size;

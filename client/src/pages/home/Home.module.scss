@@ -4,13 +4,9 @@
 #home {
   min-height: 100%;
   padding: $padding-lg;
-
-  .actions-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    margin-block-end: $margin-md;
-  }
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
   .cards-wrapper {
     display: grid;
@@ -18,15 +14,21 @@
     gap:20px;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 480px) {
     .cards-wrapper {
-      grid-template-columns: repeat(2, 1fr); /* 2 items per row for smaller screens */
+      grid-template-columns: repeat(1, 1fr);
     }
   }
 
-  @media (max-width: 600px) {
+  @media (min-width: 481px) and (max-width: 768px) {
     .cards-wrapper {
-      grid-template-columns: repeat(1, 1fr); /* 1 item per row for very small screens */
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .cards-wrapper {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

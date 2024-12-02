@@ -5,13 +5,12 @@ $nav-link-color: #ffffff;
 $nav-link-hover-color: #0056b3;
 $nav-link-active-color: #0056b3;
 
-.navbar {
+header {
   position: fixed;
   top: 0;
   width: 100%;
   background-color: $nav-background-color;
   color: $nav-link-color;
-  //padding: 10px 20px;
   z-index: 1000;
   height: $navbar-height;
   display: flex;
@@ -19,7 +18,13 @@ $nav-link-active-color: #0056b3;
   padding: $padding-md;
 }
 
-.nav-wrapper {
+.navbar-wrapper{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar {
   ul {
     list-style-type: none;
     margin: 0;
@@ -39,9 +44,23 @@ $nav-link-active-color: #0056b3;
   li a:hover:not(.active) {
     color: $button-color-secondary-hover;
   }
+}
 
-  .active {
-    background-color: $nav-link-active-color;
+.navbar-actions{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-create-action{
+  margin-top: -4px;
+  margin-inline-start: $margin-sm;
+  cursor: pointer;
+  :hover{
+    color: $button-color-secondary-hover;
   }
+}
 
+.logo{
+  font-size: $font-size-xl;
 }

@@ -95,3 +95,17 @@ export const getProjectWithTasksApi = async(id) => {
         throw new Error(`Unable to fetch project with tasks`);
     }
 }
+
+/**
+ * Return the search projects results
+ *
+ * @param body
+ * @returns {Promise<axios.AxiosResponse<any>>}
+ */
+export const searchProjectsApi = async(body) => {
+    try {
+        return await axiosClient.post(`${PROJECTS_ENDPOINT}/search`, body);
+    } catch (e) {
+        throw new Error(`Unable to fetch tasks: ${e.message}`);
+    }
+}

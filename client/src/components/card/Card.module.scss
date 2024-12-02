@@ -4,11 +4,11 @@
 $card-height: 200px;
 $card-border-radius: 8px;
 $card-border-color: #d6d5d5;
-$card-background: #ffffff;
+$card-background: $white-color;
 $card-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 $card-hover-scale: 1.05;
-$card-close-button-top: 10px;
-$card-close-button-right: 10px;
+$card-close-button-top: $margin-md;
+$card-close-button-right:  $margin-md;
 
 .card {
   display: flex;
@@ -16,7 +16,7 @@ $card-close-button-right: 10px;
   position: relative;
   height: $card-height;
   max-width: 1200px;
-  width: 100%;
+  width: 330px;
   border: 1px solid $card-border-color;
   border-radius: $card-border-radius;
   box-shadow: $card-box-shadow;
@@ -24,7 +24,10 @@ $card-close-button-right: 10px;
   background-color: $card-background;
   padding: $padding-md;
   transition: transform 0.3s ease-in-out;
-  cursor: pointer;
+
+  &.row {
+    width: 100%;
+  }
 
   &:hover {
     transform: scale($card-hover-scale);
@@ -36,5 +39,17 @@ $card-close-button-right: 10px;
 
   .card-content{
     flex: 2;
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      width: 380px;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .card {
+      width: 360px;
+    }
   }
 }

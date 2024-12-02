@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  useAddTask,
-  useRemoveAllTasks,
-  useRemoveTask, useResetTaskCount,
-  useSetTaskCount,
-  useSetTasks,
-  useTaskCount,
-  useTasks,
-  useUpdateTask
-} from '../../store/taskStore'
+import useTaskStore from '../../store/taskStore'
 import { getProjectWithTasksApi } from '../../services/projects'
 import TaskForm from './components/taskForm/TaskForm'
 import { useOpenModal } from '../../store/modalStore'
@@ -19,31 +10,47 @@ import useSocketMessage from '../../hooks/UseSocketMessage'
 import { useShowSnackbar } from '../../store/snackbarStore'
 import Spinner from '../../components/spinner/Spinner'
 import { SpinnerSize } from '../../components/spinner/constants'
-import Panel from '../../components/panel/Panel'
 import TaskCards from './components/TaskCards'
-import { useSetShowBackButton } from '../../store/navigationStore'
+import useNavigationStore from '../../store/navigationStore'
+import { searchTasksApi } from '../../services/tasks'
+import EmptyTasksView from './components/emptyTasksView/EmptyTasksView'
 
 const Projects = () => {
   const { id: projectId } = useParams();
   const [isLoadingProjectWithTasks, setIsLoadingProjectWithTasks] = useState(false);
   const [fetchProjectWithTasksError, setFetchProjectWithTasksError] = useState(false);
 
-  const tasks = useTasks();
-  const addTask = useAddTask();
-  const removeTask = useRemoveTask();
-  const updateTask = useUpdateTask();
-  const setTasks = useSetTasks();
-  const removeAllTasks = useRemoveAllTasks();
-  const setCurrentProject = useSetCurrentProject();
+  //Tasks store actions
+  const {
+    filteredTasks,
+    addTask,
+    removeTask,
+    updateTask,
+    setTasks,
+    removeAllTasks,
+    taskCount,
+    setTaskCount,
+    resetTaskCount,
+    setFilteredTasks,
+    decrementTaskCount,
+    incrementTaskCount
+  } = useTaskStore();
+
+
   const currentProject = useCurrentProject();
-  const taskCount = useTaskCount();
-  const setTaskCount = useSetTaskCount();
-  const resetTaskCount = useResetTaskCount();
+  const setCurrentProject = useSetCurrentProject();
+
+  //Navigation store actions
+  const { setShowBackButton, setSearchOptions, setCreateItemHandler } = useNavigationStore();
 
   const openModal  = useOpenModal();
   const showSnackbar = useShowSnackbar()
-  const setShowBackButton = useSetShowBackButton();
 
+  const createTaskHandler = () => {
+    openModal( <TaskForm projectId={projectId}/>)
+  }
+
+  //Fetch the current project and tasks and init the project store
   useEffect(() => {
     const fetchProjectWithTasks = async () => {
       setIsLoadingProjectWithTasks(true);
@@ -63,45 +70,52 @@ const Projects = () => {
     fetchProjectWithTasks();
 
     return () => {
-      removeAllTasks(projectId);
+      removeAllTasks();
       resetTaskCount()
     };
   }, [projectId, removeAllTasks, setCurrentProject, setTasks, showSnackbar])
 
   useEffect(() => {
     setShowBackButton(true);
+    setCreateItemHandler(createTaskHandler);
+    setSearchOptions({type:'tasks', api: searchTasksApi, handler : setFilteredTasks});
+
     return () => setShowBackButton(false);
   }, []);
 
   const taskMessageHandlers = {
-    INSERT: (data) =>  addTask(data),
+    INSERT: (data) =>  {
+      incrementTaskCount();
+      addTask(data);
+    },
     UPDATE: (data) => updateTask(data),
-    DELETE: ({_id: taskId, projectId}) => removeTask(projectId, taskId)
+    DELETE: ({_id: taskId, projectId}) => {
+      removeTask(projectId, taskId);
+      decrementTaskCount();
+    }
   };
 
   useSocketMessage('Task', taskMessageHandlers);
 
-  const createTaskHandler = () => {
-    openModal( <TaskForm projectId={projectId}/>)
+  if(fetchProjectWithTasksError) {
+    return <EmptyTasksView/>
   }
 
   return (
-    <div id={styles['projects']}>
-      {isLoadingProjectWithTasks || tasks === null ? (
-        <Spinner size={SpinnerSize.LARGE} />
+    <div id={styles['tasks']}>
+      {isLoadingProjectWithTasks || filteredTasks === null ? (
+        <Spinner size={SpinnerSize.LARGE}/>
       ) : (
-        <div className={styles['tasks-wrapper']}>
-          <Panel
-            title={currentProject.name}
-            itemsCount={taskCount}
-            createHandler={createTaskHandler}
-          />
-          <TaskCards
-            key={projectId}
-            values={tasks[projectId]}
-            projectId={projectId}
-          />
-        </div>
+        <>
+          <h1>{currentProject.name} <span>({taskCount})</span></h1>
+          <div className={styles['tasks-wrapper']}>
+            <TaskCards
+              key={projectId}
+              values={filteredTasks[projectId]}
+              projectId={projectId}
+            />
+          </div>
+        </>
       )}
     </div>
   );

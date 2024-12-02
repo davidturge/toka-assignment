@@ -4,17 +4,21 @@ import {create} from 'zustand';
  * Project store, handles setting the projects, adding a project, and removing a project.
  */
 
+const createProjectsMap = (projectsArray) => projectsArray.reduce((acc, project) => {
+  acc[project._id] = project;
+  return acc;
+}, {});
+
 const useProjectStore = create((set) => ({
   projects: null,
   currentProject: null,
   projectCount: 0,
+  filteredProjects: null,
   setProjects: (projectsArray) => {
-    const projects = projectsArray.reduce((acc, project) => {
-      acc[project._id] = project;
-      return acc;
-    }, {});
-    set({ projects });
+    const projects = createProjectsMap(projectsArray);
+    set({ projects, filteredProjects: projects });
   },
+  setFilteredProjects: (results) => set({ filteredProjects: createProjectsMap(results) }),
   setProjectCount: (count) =>
     set(() => ({
       projectCount: count >= 0 ? count : 0,
@@ -24,34 +28,60 @@ const useProjectStore = create((set) => ({
   },
   resetProjectCount: () =>
     set(() => ({
-      projectCount: 0, // Reset the count to the initial state
+      projectCount: 0,
     })),
   updateProject: (updatedProject) =>
     set((state) => {
-      return {
-        projects: {
-          ...state.projects,
-          [updatedProject._id]: {
-            ...state.projects[updatedProject._id],
-            ...updatedProject,
-          },
+      const updatedProjects = {
+        ...state.projects,
+        [updatedProject._id]: {
+          ...state.projects[updatedProject._id],
+          ...updatedProject,
         },
+      };
+
+      const updatedFilteredProjects = {
+        ...state.filteredProjects,
+        [updatedProject._id]: {
+          ...state.filteredProjects[updatedProject._id],
+          ...updatedProject,
+        },
+      };
+
+      return {
+        projects: updatedProjects,
+        filteredProjects: updatedFilteredProjects,
       };
     }),
   addProject: (project) =>
     set((state) => {
+      const updatedProjects = {
+        ...state.projects,
+        [project._id]: project,
+      };
+
+      const updatedFilteredProjects = {
+        ...state.filteredProjects,
+        [project._id]: project,
+      };
+
       return {
-        projects: {
-          ...state.projects,
-          [project._id]: project,
-        },
+        projects: updatedProjects,
+        filteredProjects: updatedFilteredProjects,
       };
     }),
   removeProject: (id) =>
     set((state) => {
       const updatedProjects = { ...state.projects };
       delete updatedProjects[id];
-      return { projects: updatedProjects };
+
+      const updatedFilteredProjects = { ...state.filteredProjects };
+      delete updatedFilteredProjects[id];
+
+      return {
+        projects: updatedProjects,
+        filteredProjects: updatedFilteredProjects,
+      };
     }),
   incrementProjectCount: () =>
     set((state) => ({
@@ -64,6 +94,7 @@ const useProjectStore = create((set) => ({
 }));
 
 export const useProjects = () => useProjectStore((state) => state.projects);
+export const useFilteredProjects = () => useProjectStore((state) => state.filteredProjects);
 export const useCurrentProject = () => useProjectStore((state) => state.currentProject);
 export const useProjectCount = () => useProjectStore((state) => state.projectCount);
 export const useSetProjects = () => useProjectStore((state) => state.setProjects)
@@ -75,3 +106,6 @@ export const useIncrementProjectCount = () => useProjectStore((state) => state.i
 export const useDecrementProjectCount = () => useProjectStore((state) => state.decrementProjectCount);
 export const useSetProjectCount = () => useProjectStore((state) => state.setProjectCount);
 export const useResetProjectCount = () => useProjectStore((state) => state.resetProjectCount);
+export const useSetFilteredProjects = () => useProjectStore((state) => state.setFilteredProjects);
+
+export default useProjectStore;

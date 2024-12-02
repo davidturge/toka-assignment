@@ -1,13 +1,20 @@
-import {create} from 'zustand';
+import { create } from "zustand";
 
 /**
  * Tasks store, handles setting the tasks, adding a task, and removing a task.
  */
 const useTaskStore = create((set) => ({
   tasks: null,
+  filteredTasks: null,
   taskCount: 0,
   setTasks: (tasks) => {
-    set({ tasks });
+    set({
+      tasks: {...tasks},
+      filteredTasks: {...tasks},
+    });
+  },
+  setFilteredTasks: (filteredTasks) => {
+    set({ filteredTasks });
   },
   setTaskCount: (count) =>
     set(() => ({
@@ -15,46 +22,63 @@ const useTaskStore = create((set) => ({
     })),
   resetTaskCount: () =>
     set(() => ({
-      taskCount: 0, // Reset the count to the initial state
+      taskCount: 0,
     })),
   addTask: (task) => {
     if (!task || !task.projectId) {
-      console.error('Task must have a valid projectId.');
+      console.error("Task must have a valid projectId.");
       return;
     }
-    set((state) => ({
-      tasks: {
+    set((state) => {
+      const updatedTasks = {
         ...state.tasks,
         [task.projectId]: state.tasks[task.projectId]
           ? [...state.tasks[task.projectId], task]
           : [task],
-      },
-    }));
+      };
+
+      const updatedFilteredTasks = {
+        ...state.filteredTasks,
+        [task.projectId]: state.filteredTasks[task.projectId]
+          ? [...state.filteredTasks[task.projectId], task]
+          : [task],
+      };
+
+      return {
+        tasks: updatedTasks,
+        filteredTasks: updatedFilteredTasks,
+      };
+    });
   },
   removeTask: (projectId, taskId) => {
     if (!projectId || !taskId) {
-      console.error('Project ID and Task ID are required.');
+      console.error("Project ID and Task ID are required.");
       return;
     }
     set((state) => {
       if (!state.tasks[projectId]) {
-        console.warn(`No tasks found for projectId: ${projectId}`);
         return state;
       }
-      const updatedProjectTasks = state.tasks[projectId].filter(
-        (task) => task._id !== taskId
-      );
+
+      const updatedTasks = {
+        ...state.tasks,
+        [projectId]: state.tasks[projectId].filter((task) => task._id !== taskId),
+      };
+
+      const updatedFilteredTasks = {
+        ...state.filteredTasks,
+        [projectId]: state.filteredTasks[projectId].filter((task) => task._id !== taskId),
+      };
+
       return {
-        tasks: {
-          ...state.tasks,
-          [projectId]: updatedProjectTasks,
-        },
+        tasks: updatedTasks,
+        filteredTasks: updatedFilteredTasks,
       };
     });
   },
   updateTask: (updatedTask) => {
     if (!updatedTask) {
-      console.error('Task not valid.');
+      console.error("Task not valid.");
       return;
     }
 
@@ -64,39 +88,55 @@ const useTaskStore = create((set) => ({
         return state;
       }
 
-      const updatedProjectTasks = state.tasks[updatedTask.projectId].map((task) =>
-        task._id === updatedTask._id ? { ...task, ...updatedTask } : task
-      );
+      const updatedTasks = {
+        ...state.tasks,
+        [updatedTask.projectId]: state.tasks[updatedTask.projectId].map((task) =>
+          task._id === updatedTask._id ? { ...task, ...updatedTask } : task
+        ),
+      };
+
+      const updatedFilteredTasks = {
+        ...state.filteredTasks,
+        [updatedTask.projectId]: state.filteredTasks[updatedTask.projectId].map((task) =>
+          task._id === updatedTask._id ? { ...task, ...updatedTask } : task
+        ),
+      };
 
       return {
-        tasks: {
-          ...state.tasks,
-          [updatedTask.projectId]: updatedProjectTasks,
-        },
+        tasks: updatedTasks,
+        filteredTasks: updatedFilteredTasks,
       };
     });
   },
   removeAllTasks: () => {
-    set({ tasks: {} });
+    set({
+      tasks: {},
+      filteredTasks: {},
+    });
   },
   incrementTaskCount: () =>
     set((state) => ({
-      taskCount: state.taskCount + 1, // Increment the count
+      taskCount: state.taskCount + 1,
     })),
   decrementTaskCount: () =>
     set((state) => ({
-      taskCount: state.taskCount > 0 ? state.taskCount - 1 : 0, // Decrement the count, ensuring it doesn't go below 0
+      taskCount: state.taskCount > 0 ? state.taskCount - 1 : 0,
     })),
 }));
 
+// Hooks for accessing the store
 export const useTasks = () => useTaskStore((state) => state.tasks);
+export const useFilteredTasks = () => useTaskStore((state) => state.filteredTasks);
 export const useTaskCount = () => useTaskStore((state) => state.taskCount);
-export const useSetTasks = () => useTaskStore((state) => state.setTasks)
-export const useAddTask = () => useTaskStore((state) => state.addTask)
-export const useUpdateTask = () => useTaskStore((state) => state.updateTask)
+export const useSetTasks = () => useTaskStore((state) => state.setTasks);
+export const useSetFilteredTasks = () => useTaskStore((state) => state.setFilteredTasks);
+export const useAddTask = () => useTaskStore((state) => state.addTask);
+export const useUpdateTask = () => useTaskStore((state) => state.updateTask);
 export const useRemoveTask = () => useTaskStore((state) => state.removeTask);
 export const useRemoveAllTasks = () => useTaskStore((state) => state.removeAllTasks);
 export const useIncrementTaskCount = () => useTaskStore((state) => state.incrementTaskCount);
 export const useDecrementTaskCount = () => useTaskStore((state) => state.decrementTaskCount);
 export const useSetTaskCount = () => useTaskStore((state) => state.setTaskCount);
 export const useResetTaskCount = () => useTaskStore((state) => state.resetTaskCount);
+
+export default useTaskStore;

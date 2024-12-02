@@ -60,3 +60,36 @@ export const formatDate = (date, format = 'YYYY-MM-DD') => {
     return `${day}-${month}-${year}`;
   }
 };
+
+/**
+ * Build Search query for projects
+ * @param value
+ * @returns {{$or: [{name: {$regex: string, $options: string}},{description: {$regex: string, $options: string}}]}}
+ */
+export const buildProjectsSearchQuery = (value) => {
+  return {
+    $or: [
+      { name: { $regex: '.*' + value + '.*', $options: 'i' } },
+      { description: { $regex: '.*' + value + '.*', $options: 'i' } },
+    ],
+  }
+}
+
+/**
+ * Build Search query for tasks
+ * @param value
+ * @returns {{$or: [{name: {$regex: string, $options: string}},{description: {$regex: string, $options: string}}]}}
+ */
+export const buildTasksSearchQuery = (value) => {
+  return {
+    $and: [
+      { projectId: '674ddb8f98c93592e62a84d3' },
+      {
+        $or: [
+          { notes: { $regex: '.*' + value + '.*', $options: 'i' } },
+          { state: { $regex: '.*' + value + '.*', $options: 'i' } },
+        ],
+      },
+    ],
+  }
+}

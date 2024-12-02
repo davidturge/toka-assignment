@@ -11,11 +11,12 @@ const TaskCards = ({ values = [], projectId }) => (
           <TaskCard
             key={taskId}
             taskId={taskId}
-            name='title'
+            name='Title'
             notes={notes}
             state={state}
             dueDate={dueDate}
             projectId={projectId}
+            isRow={true}
           />
         ))
       ) : (

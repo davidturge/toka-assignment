@@ -2,6 +2,18 @@ import axiosClient from "../api"
 
 export const TASKS_ENDPOINT = "/api/tasks"
 
+const taskToProjectReducer = (tasks) => tasks.reduce((tasksMap, task) => {
+    const { projectId } = task;
+
+    if (!tasksMap[projectId]) {
+        tasksMap[projectId] = [];
+    }
+
+    // Push the current task into the appropriate project group
+    tasksMap[projectId].push(task);
+
+    return tasksMap;
+}, {});
 /**
  * Fetches all tasks.
  *
@@ -48,7 +60,8 @@ export const getTaskApi = async(id) => {
 
 export const searchTasksApi = async(body) => {
     try {
-        return await axiosClient.post(`${TASKS_ENDPOINT}/search`, body);
+        const tasks = await axiosClient.post(`${TASKS_ENDPOINT}/search`, body);
+        return taskToProjectReducer(tasks);
     } catch (e) {
         throw new Error(`Unable to fetch tasks: ${e.message}`);
     }
@@ -63,18 +76,7 @@ export const searchTasksApi = async(body) => {
 export const getTasksByProjectIdApi = async(projectId) => {
     try {
         const tasks  = await axiosClient.post(`${TASKS_ENDPOINT}/search`, { projectId });
-        return tasks.reduce((tasksMap, task) => {
-            const { projectId } = task;
-
-            if (!tasksMap[projectId]) {
-                tasksMap[projectId] = [];
-            }
-
-            // Push the current task into the appropriate project group
-            tasksMap[projectId].push(task);
-
-            return tasksMap;
-        }, {});
+        return taskToProjectReducer(tasks);
     } catch (e) {
         throw new Error(`Unable to fetch tasks: ${e.message}`);
     }

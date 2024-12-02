@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { getAllProjectsApi } from '../../services/projects'
+import { getAllProjectsApi, searchProjectsApi } from '../../services/projects'
 import ProjectForm from './components/ProjectForm/ProjectForm'
-import {
-  useAddProject, useProjectCount,
-  useProjects,
-  useRemoveProject, useSetProjectCount,
-  useSetProjects,
-  useUpdateProject
-} from '../../store/projectsStore'
+import useProjectStore, { useSetFilteredProjects } from '../../store/projectsStore'
 import { useOpenModal } from '../../store/modalStore'
 import { useShowSnackbar } from '../../store/snackbarStore'
 import EmptyProjectsView from './components/emptyProjectsView/EmptyProjectsView'
@@ -16,25 +10,35 @@ import styles from './Home.module.scss'
 import useSocketMessage from '../../hooks/UseSocketMessage'
 import Spinner from '../../components/spinner/Spinner'
 import { SpinnerSize } from '../../components/spinner/constants'
-import Panel from '../../components/panel/Panel'
+import useNavigationStore from '../../store/navigationStore'
 
 const Home = () => {
   const [isLoadingProjects, setIsLoadingProjects] = useState(false);
   const [fetchProjectsError, setFetchProjectsError] = useState(false);
 
-  const projects = useProjects();
-  const addProject = useAddProject();
-  const setProjects = useSetProjects();
-  const removeProject = useRemoveProject();
-  const updateProject = useUpdateProject();
-  const projectCount = useProjectCount();
-  const setProjectCount = useSetProjectCount();
+  //Project store actions
+  const {
+    filteredProjects,
+    setProjects,
+    addProject,
+    removeProject,
+    updateProject,
+    projectCount,
+    setProjectCount,
+    incrementProjectCount,
+    decrementProjectCount
+  } = useProjectStore();
+
+  const { setSearchOptions, setCreateItemHandler } = useNavigationStore();
   const openModal  = useOpenModal();
   const showSnackbar = useShowSnackbar();
 
-  /**
-   * Fetch the projects and init the project store
-   */
+
+  const createProjectHandler = () => {
+    openModal(<ProjectForm />)
+  }
+
+  //Fetch the projects and init the project store
   useEffect(() => {
     const fetchProjects = async () => {
       setIsLoadingProjects(true);
@@ -49,24 +53,30 @@ const Home = () => {
       } finally {
         setIsLoadingProjects(false);
       }
-
     }
     fetchProjects();
   }, [setProjects, showSnackbar]);
 
 
+  useEffect(() => {
+    setCreateItemHandler(createProjectHandler);
+    setSearchOptions({type: 'projects', api: searchProjectsApi, handler : useSetFilteredProjects})
+  }, [setCreateItemHandler, setSearchOptions])
+
   const projectMessageHandlers  = {
-    INSERT: (data) =>  addProject(data),
+    INSERT: (data) =>  {
+      addProject(data);
+      incrementProjectCount();
+    },
     UPDATE: (data) => updateProject(data),
-    DELETE: ({_id: id}) => removeProject(id)
+    DELETE: ({_id: id}) => {
+      removeProject(id);
+      decrementProjectCount();
+    }
   }
 
   //Handle the socket message
   useSocketMessage('Project', projectMessageHandlers);
-
-  const createProjectHandler = () => {
-    openModal(<ProjectForm />)
-  }
 
   if(fetchProjectsError) {
     return <EmptyProjectsView/>
@@ -74,16 +84,12 @@ const Home = () => {
 
   return (
     <div id={styles['home']}>
-      <div>
-        <Panel
-          title={'Projects'}
-          createHandler={createProjectHandler}
-          itemsCount={projectCount}
-        />
-        {isLoadingProjects || projects === null ? (
+      <h1>{'Projects'} <span>({projectCount})</span></h1>
+      <div className={styles['projects-wrapper']}>
+        {isLoadingProjects || !filteredProjects ? (
           <Spinner size={SpinnerSize.LARGE}/>
-        ) : projects && Object.values(projects).length > 0 ? (
-          <ProjectCards projects={Object.values(projects)}/>
+        ) : filteredProjects && Object.values(filteredProjects).length > 0 ? (
+          <ProjectCards projects={Object.values(filteredProjects)}/>
         ) : (
           <EmptyProjectsView/>
         )}

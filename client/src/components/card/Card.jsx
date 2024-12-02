@@ -6,16 +6,18 @@ const Card = ({
   header,
   content,
   footer,
+  isRow,
   onClick,
   onMouseEnter,
   onMouseLeave,
 }) => {
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} ${isRow ? styles['row'] : ''}`}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}>
+      onMouseLeave={onMouseLeave}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}>
       {
         header && <div className={styles['card-header']}>
           {header}
@@ -46,6 +48,7 @@ Card.propTypes = {
     PropTypes.node,
   ]),
   onClick: PropTypes.func,
-  onMouseEnter:  PropTypes.func,
-  onMouseLeave:  PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  isRow: PropTypes.bool, // indication to set the card to 100%
 };

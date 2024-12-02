@@ -5,13 +5,13 @@ import './Spinner.module.scss'
 import styles from './Spinner.module.scss'
 
 const Spinner = ({
-    size = SpinnerSize.SMALL,
+    size = SpinnerSize.LARGE,
     loadingLabel = '',
     isFullScreen = true
 }) => {
     if (isFullScreen) {
         return (
-          <div className={styles.spinnerFullscreen}>
+          <div className={styles['spinner-fullscreen']}>
               <div className={styles[`spinner-${size}`]}>{loadingLabel}</div>
           </div>
         );

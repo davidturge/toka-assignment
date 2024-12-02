@@ -11,7 +11,6 @@ import { formatDate } from '../../../../utils/util';
 import styles from './TaskForm.module.scss';
 import { taskStates } from '../../constants'
 import * as formConstants from './constants';
-import { useIncrementTaskCount } from '../../../../store/taskStore'
 
 const TaskForm = ({
   taskId,
@@ -37,10 +36,8 @@ const TaskForm = ({
 
   const showSnackbar = useShowSnackbar();
   const closeModal  = useCloseModal();
-  const incrementTaskCount = useIncrementTaskCount();
 
   const onSuccess = useCallback(() => {
-    incrementTaskCount()
     showSnackbar({ message: 'Changes saved successfully.', type: 'success' });
     closeModal();
   }, [closeModal]);

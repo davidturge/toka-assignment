@@ -4,7 +4,7 @@ const useSnackbarStore = create((set) => ({
   isVisible: false,
   message: '',
   type: 'success',
-  showSnackbar: ({ message, type = 'success', duration = 3000 }) => {
+  showSnackbar: ({ message, type = 'success' }) => {
     set({ isVisible: true, message, type });
   },
   closeSnackbar: () => {
@@ -13,6 +13,6 @@ const useSnackbarStore = create((set) => ({
 }));
 
 export const useShowSnackbar = () => useSnackbarStore((state) => state.showSnackbar);
-export const useCloseSnackbar = () => useSnackbarStore((state) => state.useCloseSnackbar);
+export const useCloseSnackbar = () => useSnackbarStore((state) => state.closeSnackbar);
 
 export default useSnackbarStore;
