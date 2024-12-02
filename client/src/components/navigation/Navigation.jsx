@@ -17,7 +17,7 @@ const Navigation = () => {
           <ul>
             {showBackButton ? (
               <li>
-                <a><ArrowCircleLeft size={40} onClick={() => navigate(-1)}/></a>
+                <a><ArrowCircleLeft size={40} onClick={() => navigate('/')}/></a>
               </li>
             ) : (
               <li>

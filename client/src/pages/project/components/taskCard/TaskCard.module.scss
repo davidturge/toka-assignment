@@ -46,6 +46,7 @@
         color: $gray-color;
       }
       .card-actions{
+        cursor: pointer;
         :hover {
           color: $button-color-primary-hover;
         }

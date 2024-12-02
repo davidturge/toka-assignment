@@ -44,7 +44,7 @@ const Search = () => {
       <Input
         id='search'
         name='search'
-        placeholder='Search'
+        placeholder='Search...'
         onChange={(evt) => debouncedOnSearch(evt.target.value)}/>
     </div>
   )

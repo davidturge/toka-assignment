@@ -1,6 +1,17 @@
 import { create } from "zustand";
 
 /**
+ * Check tasks is not empty and return the number of tasks
+ */
+const getTaskCount = (tasks) => {
+  return tasks &&
+  Object.keys(tasks).length > 0 &&
+  Array.isArray(Object.values(tasks)[0])
+    ? Object.values(tasks)[0].length
+    : 0
+}
+
+/**
  * Tasks store, handles setting the tasks, adding a task, and removing a task.
  */
 const useTaskStore = create((set) => ({
@@ -11,10 +22,11 @@ const useTaskStore = create((set) => ({
     set({
       tasks: {...tasks},
       filteredTasks: {...tasks},
+      taskCount: getTaskCount(tasks),
     });
   },
   setFilteredTasks: (filteredTasks) => {
-    set({ filteredTasks });
+    set({ filteredTasks, taskCount: getTaskCount(filteredTasks) });
   },
   setTaskCount: (count) =>
     set(() => ({

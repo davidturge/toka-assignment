@@ -47,7 +47,6 @@ const Home = () => {
       try {
         const res = await getAllProjectsApi();
         setProjects(res);
-        res && setProjectCount(res.length);
         setFetchProjectsError(false);
       } catch (error) {
         showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
@@ -62,7 +61,11 @@ const Home = () => {
 
   useEffect(() => {
     setCreateItemHandler(createProjectHandler);
-    setSearchOptions({type: EntityType.PROJECT, api: searchProjectsApi, handler : setFilteredProjects})
+    setSearchOptions({
+      type: EntityType.PROJECT,
+      api: searchProjectsApi,
+      handler : setFilteredProjects
+    })
   }, [setCreateItemHandler, setSearchOptions])
 
   const projectMessageHandlers  = {

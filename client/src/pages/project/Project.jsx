@@ -59,7 +59,6 @@ const Projects = () => {
         const {project, tasks} = await getProjectWithTasksApi(projectId);
         setCurrentProject(project);
         setTasks(tasks);
-        tasks[projectId] && setTaskCount(tasks[projectId].length);
         setFetchProjectWithTasksError(false)
       } catch (error) {
         showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
@@ -79,7 +78,11 @@ const Projects = () => {
   useEffect(() => {
     setShowBackButton(true);
     setCreateItemHandler(createTaskHandler);
-    setSearchOptions({type: EntityType.TASK, api: searchTasksApi, handler : setFilteredTasks});
+    setSearchOptions({
+      type: EntityType.TASK,
+      api: searchTasksApi,
+      handler : setFilteredTasks
+    });
 
     return () => setShowBackButton(false);
   }, []);

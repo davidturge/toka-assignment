@@ -16,9 +16,9 @@ const useProjectStore = create((set) => ({
   filteredProjects: null,
   setProjects: (projectsArray) => {
     const projects = createProjectsMap(projectsArray);
-    set({ projects, filteredProjects: projects });
+    set({ projects, filteredProjects: projects, projectCount: projectsArray.length });
   },
-  setFilteredProjects: (results) => set({ filteredProjects: createProjectsMap(results) }),
+  setFilteredProjects: (results) => set({ filteredProjects: createProjectsMap(results), projectCount: results.length }),
   setProjectCount: (count) =>
     set(() => ({
       projectCount: count >= 0 ? count : 0,
