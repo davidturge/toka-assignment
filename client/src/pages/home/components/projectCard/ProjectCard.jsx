@@ -10,6 +10,7 @@ import { calcDateFromNow } from '../../../../utils/util'
 import ConfirmationModal from '../../../../components/modals/confirm-modal/ConfirmationModal'
 import { useShowSnackbar } from '../../../../store/snackbarStore'
 import styles from './ProjectCard.module.scss';
+import { SnackbarType } from '../../../../components/snackbar/constants'
 
 const ProjectCard = ({
   _id: projectId,
@@ -30,9 +31,9 @@ const ProjectCard = ({
       setIsDeletingProject(true);
       try {
         await deleteProjectApi(id);
-        showSnackbar({ message: 'Successfully deleted', type: 'success' });
+        showSnackbar({ message: 'Successfully deleted', type: SnackbarType.SUCCESS });
       } catch (error) {
-        showSnackbar({ message: 'Unable to delete the item. Please check and try again.', type: 'error' });
+        showSnackbar({ message: 'Unable to delete the item. Please check and try again.', type: SnackbarType.Error });
       } finally {
         setIsDeletingProject(false);
         closeModal();

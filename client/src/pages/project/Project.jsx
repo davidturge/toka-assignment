@@ -14,6 +14,7 @@ import TaskCards from './components/TaskCards'
 import useNavigationStore from '../../store/navigationStore'
 import { searchTasksApi } from '../../services/tasks'
 import EmptyTasksView from './components/emptyTasksView/EmptyTasksView'
+import { SnackbarType } from '../../components/snackbar/constants'
 
 const Projects = () => {
   const { id: projectId } = useParams();
@@ -61,7 +62,7 @@ const Projects = () => {
         tasks[projectId] && setTaskCount(tasks[projectId].length);
         setFetchProjectWithTasksError(false)
       } catch (error) {
-        showSnackbar({ message: error.message, type: 'error' });
+        showSnackbar({ message: error.message, type: SnackbarType.ERROR });
         setFetchProjectWithTasksError(true);
       } finally {
         setIsLoadingProjectWithTasks(false);

@@ -1,17 +1,18 @@
+@import '../../styles/_variables';
 
-$card-close-button-top: 10px;
-$card-close-button-right: 10px;
+$card-close-button-top: 0px;
+$card-close-button-right: 0px;
 
 .snackbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
+  padding: $padding-md;
   border-radius: 8px;
-  margin: 10px 0;
-  color: #ffffff;
+  margin: $margin-sm 0;
+  color: $white-color;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-size: 16px;
+  font-size: $font-size-md;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -21,11 +22,11 @@ $card-close-button-right: 10px;
   transition: opacity 0.3s ease-in-out;
 
   &.success {
-    background-color: #28a745;
+    background-color: $success-color;
   }
 
   &.error {
-    background-color: #dc3545;
+    background-color: $danger-color;
   }
 
   .message {
@@ -38,12 +39,12 @@ $card-close-button-right: 10px;
     right: $card-close-button-right;
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: $font-size-xl;
     cursor: pointer;
-    color: #ffffff;
+    color: $white-color;
 
     &:hover {
-      color: #000000;
+      color: $gray-color;
     }
   }
 }

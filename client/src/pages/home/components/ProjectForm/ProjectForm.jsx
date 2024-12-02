@@ -8,6 +8,7 @@ import Button from '../../../../components/button/Button';
 import Input from '../../../../components/Input';
 import * as formConstants from './constants'
 import styles from './ProjectForm.module.scss';
+import { SnackbarType } from '../../../../components/snackbar/constants'
 
 const ProjectForm = ({
   id, name ='',
@@ -41,7 +42,7 @@ const ProjectForm = ({
 
   const onSuccess = useCallback(() => {
     closeModal();
-    showSnackbar({ message: 'Updated successfully', type: 'success' });
+    showSnackbar({ message: 'Updated successfully', type: SnackbarType.SUCCESS });
   }, [closeModal])
 
   const onFailure = useCallback(() => {

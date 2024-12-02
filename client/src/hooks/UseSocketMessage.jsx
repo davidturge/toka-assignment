@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 import { useWebSocket } from '../WebSocketContext'
 
+/**
+ * Custom hook to register a WebSocket message handler for a specific event model.
+ *
+ * @param {string} eventModel - The model of the event to listen for.
+ * @param {Object} handler - An object containing callback functions for different message types.
+ */
 const useSocketMessage = (eventModel, handler = null) => {
   const { registerCallback } = useWebSocket();
 

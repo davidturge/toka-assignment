@@ -13,7 +13,7 @@ export const getAllProjectsApi = async() => {
     try {
         return  await axiosClient.get(PROJECTS_ENDPOINT);
     } catch (e) {
-        throw new Error(`Something went wrong while loading your projects. Please try again.`);
+        throw new Error(`Unable to load projects.`);
     }
 }
 

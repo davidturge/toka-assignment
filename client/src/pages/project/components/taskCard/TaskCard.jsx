@@ -10,6 +10,7 @@ import { formatDate } from '../../../../utils/util'
 import { taskStates, taskStatesClass } from '../../constants'
 import styles from './TaskCard.module.scss'
 import PropTypes from 'prop-types'
+import { SnackbarType } from '../../../../components/snackbar/constants'
 
 const TaskCard = ({
   taskId,
@@ -32,9 +33,9 @@ const TaskCard = ({
       setIsDeletingTask(true);
       try {
         await deleteTaskApi(id);
-        showSnackbar({ message: 'Successfully deleted', type: 'success' });
+        showSnackbar({ message: 'Successfully deleted', type: SnackbarType.SUCCESS });
       } catch (error) {
-        showSnackbar({ message: 'Unable to delete the item. Please check and try again.', type: 'error' });
+        showSnackbar({ message: 'Unable to delete the item. Please check and try again.', type: SnackbarType.ERROR });
       } finally {
         closeModal();
         setIsDeletingTask(false);

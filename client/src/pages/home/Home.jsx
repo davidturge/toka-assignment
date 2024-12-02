@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getAllProjectsApi, searchProjectsApi } from '../../services/projects'
 import ProjectForm from './components/ProjectForm/ProjectForm'
-import useProjectStore, { useSetFilteredProjects } from '../../store/projectsStore'
+import useProjectStore from '../../store/projectsStore'
 import { useOpenModal } from '../../store/modalStore'
 import { useShowSnackbar } from '../../store/snackbarStore'
 import EmptyProjectsView from './components/emptyProjectsView/EmptyProjectsView'
@@ -11,6 +11,7 @@ import useSocketMessage from '../../hooks/UseSocketMessage'
 import Spinner from '../../components/spinner/Spinner'
 import { SpinnerSize } from '../../components/spinner/constants'
 import useNavigationStore from '../../store/navigationStore'
+import { SnackbarType } from '../../components/snackbar/constants'
 
 const Home = () => {
   const [isLoadingProjects, setIsLoadingProjects] = useState(false);
@@ -25,6 +26,7 @@ const Home = () => {
     updateProject,
     projectCount,
     setProjectCount,
+    setFilteredProjects,
     incrementProjectCount,
     decrementProjectCount
   } = useProjectStore();
@@ -32,7 +34,6 @@ const Home = () => {
   const { setSearchOptions, setCreateItemHandler } = useNavigationStore();
   const openModal  = useOpenModal();
   const showSnackbar = useShowSnackbar();
-
 
   const createProjectHandler = () => {
     openModal(<ProjectForm />)
@@ -48,7 +49,7 @@ const Home = () => {
         res && setProjectCount(res.length);
         setFetchProjectsError(false);
       } catch (error) {
-        showSnackbar({ message: error.message, type: 'error' });
+        showSnackbar({ message: error.message, type: SnackbarType.ERROR });
         setFetchProjectsError(true);
       } finally {
         setIsLoadingProjects(false);
@@ -60,7 +61,7 @@ const Home = () => {
 
   useEffect(() => {
     setCreateItemHandler(createProjectHandler);
-    setSearchOptions({type: 'projects', api: searchProjectsApi, handler : useSetFilteredProjects})
+    setSearchOptions({type: 'projects', api: searchProjectsApi, handler : setFilteredProjects})
   }, [setCreateItemHandler, setSearchOptions])
 
   const projectMessageHandlers  = {

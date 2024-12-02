@@ -1,10 +1,11 @@
 import { create } from 'zustand'
+import { SnackbarType } from '../components/snackbar/constants'
 
 const useSnackbarStore = create((set) => ({
   isVisible: false,
   message: '',
-  type: 'success',
-  showSnackbar: ({ message, type = 'success' }) => {
+  type: SnackbarType.SUCCESS,
+  showSnackbar: ({ message, type = SnackbarType.SUCCESS }) => {
     set({ isVisible: true, message, type });
   },
   closeSnackbar: () => {

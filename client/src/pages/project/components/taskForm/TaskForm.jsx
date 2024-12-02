@@ -11,6 +11,7 @@ import { formatDate } from '../../../../utils/util';
 import styles from './TaskForm.module.scss';
 import { taskStates } from '../../constants'
 import * as formConstants from './constants';
+import { SnackbarType } from '../../../../components/snackbar/constants'
 
 const TaskForm = ({
   taskId,
@@ -38,12 +39,12 @@ const TaskForm = ({
   const closeModal  = useCloseModal();
 
   const onSuccess = useCallback(() => {
-    showSnackbar({ message: 'Changes saved successfully.', type: 'success' });
+    showSnackbar({ message: 'Changes saved successfully.', type: SnackbarType.SUCCESS });
     closeModal();
   }, [closeModal]);
 
   const onFailure = useCallback(() => {
-    showSnackbar({ message: 'Something went wrong. Please try again later.', type: 'error' });
+    showSnackbar({ message: 'Something went wrong. Please try again later.', type: SnackbarType.ERROR });
     closeModal();
   }, [closeModal]);
 
