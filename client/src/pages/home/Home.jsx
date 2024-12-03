@@ -26,7 +26,6 @@ const Home = () => {
     removeProject,
     updateProject,
     projectCount,
-    setProjectCount,
     setFilteredProjects,
     incrementProjectCount,
     decrementProjectCount

@@ -31,7 +31,6 @@ const Projects = () => {
     setTasks,
     removeAllTasks,
     taskCount,
-    setTaskCount,
     resetTaskCount,
     setFilteredTasks,
     decrementTaskCount,
