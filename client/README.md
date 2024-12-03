@@ -68,3 +68,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Project
+Socket management is handled by the `WebSocketContext.js` context and the `useSocketMessage.jsx` hook. The `WebSocketProvider` manages the WebSocket connection, allowing child components to subscribe to incoming messages.
+
+### Pages
+- **Home Component**: Displays the card list of projects, available at URL `/`.
+- **Project Component**: Displays the card list of tasks, available at URL `/project/:id`.
+
+### Services
+All API calls are located in:
+- `services/project.js`
+- `services/tasks.js`
+
+### Store
+`Zustand` is used for state management. The stores are located in the `/store` folder.
