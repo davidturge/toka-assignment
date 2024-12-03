@@ -63,7 +63,7 @@ const TaskForm = ({
   useEffect(() => {
     const allFieldsValid = !stateIsInvalid && !dueDateIsInvalid && !notesIsInvalid;
     if(taskId) {
-      setIsFormValid(allFieldsValid && !hasEdited);
+      setIsFormValid(allFieldsValid);
     } else {
       setIsFormValid(allFieldsValid && hasEdited);
     }
