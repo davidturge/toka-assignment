@@ -9,20 +9,20 @@ const Select = ({
   ...props
 }) => {
   return (
-    <div className="control">
+    <div className='control'>
       <label htmlFor={id}>{label}</label>
       <select
         id={id}
         {...props}
       >
-        <option value="">Select State</option>
+        <option value=''>Select State</option>
         {options && options.map(([key, displayValue]) => (
           <option key={key} value={key}>
             {displayValue}
           </option>
         ))}
       </select>
-      <div className="control-error">
+      <div className='control-error'>
         {error && <p>{error}</p>}
       </div>
     </div>

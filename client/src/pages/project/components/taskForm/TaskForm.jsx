@@ -42,12 +42,12 @@ const TaskForm = ({
   const onSuccess = useCallback(() => {
     showSnackbar({ message: UPDATE_SUCCESSFULLY_MSG, type: SnackbarType.SUCCESS });
     closeModal();
-  }, [closeModal]);
+  }, [closeModal, showSnackbar]);
 
   const onFailure = useCallback(() => {
     showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
     closeModal();
-  }, [closeModal]);
+  }, [closeModal, showSnackbar]);
 
   const { onSubmit } = useSubmit({
     apiFn: taskId ? updateTaskApi : createTaskApi,
@@ -67,7 +67,7 @@ const TaskForm = ({
     } else {
       setIsFormValid(allFieldsValid && hasEdited);
     }
-  }, [stateIsInvalid, dueDateIsInvalid, notesIsInvalid, hasEdited]);
+  }, [taskId, stateIsInvalid, dueDateIsInvalid, notesIsInvalid, hasEdited]);
 
 
   const handleInputChange = (identifier, value) => {
@@ -94,12 +94,12 @@ const TaskForm = ({
       <h2>{taskId ? 'Edit Task' : 'Create Task'}</h2>
       <form onSubmit={onSubmit}>
         {taskId && <input
-          type="hidden"
+          type='hidden'
           name={formConstants.TASK_FORM_INPUT_ID}
           value={taskId}
         />}
         <input
-          type="hidden"
+          type='hidden'
           name={formConstants.TASK_FORM_INPUT_PROJECT_ID}
           value={projectId}
         />
@@ -115,7 +115,7 @@ const TaskForm = ({
         />
         <Input
           label={formConstants.TASK_FORM_INPUT_LABEL_DUE_DATE}
-          type="date"
+          type='date'
           id={formConstants.TASK_FORM_INPUT_DUE_DATE}
           name={formConstants.TASK_FORM_INPUT_DUE_DATE}
           value={enteredValues.dueDate}
@@ -125,7 +125,7 @@ const TaskForm = ({
         />
         <Input
           label={formConstants.TASK_FORM_INPUT_LABEL_NOTES}
-          type="text"
+          type='text'
           id={formConstants.TASK_FORM_INPUT_NOTES}
           name={formConstants.TASK_FORM_INPUT_NOTES}
           value={enteredValues.notes}
@@ -134,7 +134,7 @@ const TaskForm = ({
           error={notesIsInvalid && 'this field is required'}
         />
         <Button
-          type="submit"
+          type='submit'
           disabled={!isFormValid}>
           {
             taskId ?

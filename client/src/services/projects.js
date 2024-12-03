@@ -1,7 +1,7 @@
-import axiosClient from "../api"
+import axiosClient from '../api'
 import { getTasksByProjectIdApi } from './tasks'
 
-const PROJECTS_ENDPOINT = "/api/projects"
+const PROJECTS_ENDPOINT = '/api/projects'
 
 /**
  * Fetches all projects.

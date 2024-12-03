@@ -21,7 +21,7 @@ const ConfirmationModal = ({
       </div>
       <div className={styles['confirm-modal-actions']}>
         <Button isLoading={isModalLoading} onClick={onConfirm}>Confirm</Button>
-        <Button buttonType="secondary" onClick={onCancel}>Cancel</Button>
+        <Button buttonType='secondary' onClick={onCancel}>Cancel</Button>
       </div>
     </div>
   )

@@ -9,14 +9,14 @@ import Snackbar from './components/snackbar/Snackbar'
 
 const App = () => {
   return (
-    <WebSocketProvider url="ws://localhost:3000/ws">
+    <WebSocketProvider url='ws://localhost:3000/ws'>
       <BrowserRouter>
         <Navigation />
         <Modal/>
         <Snackbar/>
         <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/project/:id" element={<Project/>}/>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/project/:id' element={<Project/>}/>
         </Routes>
       </BrowserRouter>
     </WebSocketProvider>

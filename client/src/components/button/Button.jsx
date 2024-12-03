@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Button.module.scss';
 import { ButtonType, DEFAULT_LOADING_LABEL } from './constants'
 
@@ -14,7 +14,7 @@ const Button = ({
   return (
     <button
       className={`${styles['toka-button']} ${styles[buttonType]} 
-      ${isLoading ? styles['toka-button-loading'] : ""}`}
+      ${isLoading ? styles['toka-button-loading'] : ''}`}
       onClick={onClick}
       disabled={isLoading || disabled}
     >

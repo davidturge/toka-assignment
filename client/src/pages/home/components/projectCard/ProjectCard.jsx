@@ -39,7 +39,7 @@ const ProjectCard = ({
         closeModal();
       }
     },
-    [deleteProjectApi, showSnackbar, closeModal, setIsModalLoading]
+    [showSnackbar, closeModal, setIsModalLoading]
   );
 
   const onDeleteButtonClicked = useCallback(async(evt, id) => {
@@ -48,8 +48,8 @@ const ProjectCard = ({
       <ConfirmationModal
         onConfirm={() => deleteProjectHandler(id)}
         onCancel={closeModal}
-        message={"Are you sure you want to delete this project?"}
-        title={"Delete Project"}
+        message={'Are you sure you want to delete this project?'}
+        title={'Delete Project'}
       />
     )
   },[openModal, closeModal, deleteProjectHandler]);

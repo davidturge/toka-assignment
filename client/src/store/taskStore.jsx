@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 /**
  * Check tasks is not empty and return the number of tasks
@@ -38,7 +38,7 @@ const useTaskStore = create((set) => ({
     })),
   addTask: (task) => {
     if (!task || !task.projectId) {
-      console.error("Task must have a valid projectId.");
+      console.error('Task must have a valid projectId.');
       return;
     }
     set((state) => {
@@ -64,7 +64,7 @@ const useTaskStore = create((set) => ({
   },
   removeTask: (projectId, taskId) => {
     if (!projectId || !taskId) {
-      console.error("Project ID and Task ID are required.");
+      console.error('Project ID and Task ID are required.');
       return;
     }
     set((state) => {
@@ -90,7 +90,7 @@ const useTaskStore = create((set) => ({
   },
   updateTask: (updatedTask) => {
     if (!updatedTask) {
-      console.error("Task not valid.");
+      console.error('Task not valid.');
       return;
     }
 

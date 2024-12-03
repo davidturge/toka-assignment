@@ -8,7 +8,7 @@
  */
 export const calcDateFromNow = (dateString) => {
   // eslint-disable-next-line no-undef
-  const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
   const now = new Date();
   const past = new Date(dateString);
 
@@ -32,7 +32,7 @@ export const calcDateFromNow = (dateString) => {
   }
 
   // If less than a minute, return a custom message
-  return "Less then a minute ago";
+  return 'Less then a minute ago';
 };
 
 /**

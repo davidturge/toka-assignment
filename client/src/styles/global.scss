@@ -56,7 +56,7 @@ fieldset {
     border: 1px solid $form-border-color;
     box-sizing: border-box;
 
-    &[type="date"] {
+    &[type='date'] {
       font-family: $default-font;
     }
   }

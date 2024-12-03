@@ -39,17 +39,17 @@ const ProjectForm = ({
     } else {
       setIsFormValid(allFieldsValid && hasEdited);
     }
-  }, [nameIsInvalid, descriptionIsInvalid, hasEdited]);
+  }, [id, nameIsInvalid, descriptionIsInvalid, hasEdited]);
 
   const onSuccess = useCallback(() => {
     showSnackbar({ message: UPDATE_SUCCESSFULLY_MSG, type: SnackbarType.SUCCESS });
     closeModal();
-  }, [closeModal])
+  }, [closeModal, showSnackbar])
 
   const onFailure = useCallback(() => {
     showSnackbar({ message: GENERIC_ERROR_MSG, type: SnackbarType.ERROR });
     closeModal();
-  }, [closeModal])
+  }, [closeModal, showSnackbar])
 
   const { onSubmit, isLoading } = useSubmit({
     apiFn: id ? updateProjectApi : createProjectApi,
@@ -81,13 +81,13 @@ const ProjectForm = ({
       <h2>{id ? 'Edit Project': 'Create Project'}</h2>
       <form onSubmit={onSubmit}>
         {id && <input
-          type="hidden"
+          type='hidden'
           name={formConstants.PROJECT_FORM_INPUT_ID}
           value={id}
         />}
         <Input
           label={formConstants.PROJECT_FORM_INPUT_LABEL_NAME}
-          type="text"
+          type='text'
           id={formConstants.PROJECT_FORM_INPUT_NAME}
           name={formConstants.PROJECT_FORM_INPUT_NAME}
           value={enteredValues.name}
@@ -99,7 +99,7 @@ const ProjectForm = ({
         />
         <Input
           label={formConstants.PROJECT_FORM_INPUT_LABEL_DESCRIPTION}
-          type="text"
+          type='text'
           id={formConstants.PROJECT_FORM_INPUT_DESCRIPTION}
           name={formConstants.PROJECT_FORM_INPUT_DESCRIPTION}
           value={enteredValues.description}
@@ -110,7 +110,7 @@ const ProjectForm = ({
           error={descriptionIsInvalid && 'this field is required'}
         />
         <Button
-          type="submit"
+          type='submit'
           isLoading={isLoading}
           disabled={!isFormValid}>
           {

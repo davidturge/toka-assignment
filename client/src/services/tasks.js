@@ -1,6 +1,6 @@
-import axiosClient from "../api"
+import axiosClient from '../api'
 
-export const TASKS_ENDPOINT = "/api/tasks"
+export const TASKS_ENDPOINT = '/api/tasks'
 
 const taskToProjectReducer = (tasks) => tasks.reduce((tasksMap, task) => {
     const { projectId } = task;

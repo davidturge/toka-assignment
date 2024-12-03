@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 import styles from './Modal.module.scss';
 import useModalStore from '../../../store/modalStore'
 
@@ -17,7 +17,7 @@ const Modal = () => {
          <div className={styles['modal-content']}>{modalContent}</div>
        </div>
     </div>,
-    document.getElementById("portal")
+    document.getElementById('portal')
   );
 };
 
