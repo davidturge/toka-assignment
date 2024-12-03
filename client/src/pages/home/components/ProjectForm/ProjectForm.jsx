@@ -35,7 +35,7 @@ const ProjectForm = ({
   useEffect(() => {
     const allFieldsValid = !nameIsInvalid && !descriptionIsInvalid;
     if(id) {
-      setIsFormValid(allFieldsValid && !hasEdited);
+      setIsFormValid(allFieldsValid);
     } else {
       setIsFormValid(allFieldsValid && hasEdited);
     }
